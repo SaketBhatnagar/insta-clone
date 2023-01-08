@@ -6,10 +6,16 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../keys");
 const User = mongoose.model("User");
+const requireLogin = require("../middleware/requireLogin");
 
 router.get("/", (req, res) => {
   console.log("hello");
   res.status(200).json({ name: "saket" });
+});
+
+router.get("/protected", requireLogin, (req, res) => {
+  console.log("verifed user");
+  res.json("you are verified");
 });
 
 router.post("/signup", (req, res) => {
